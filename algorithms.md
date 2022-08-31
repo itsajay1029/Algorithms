@@ -70,3 +70,23 @@ class Solution {
 
 ```
 
+Never use `backtracking with int[] in queue (BFS)` because even if you change the states in int[] and after storing it in queue you try revert the changes the entire array in queue will also change. 
+
+[https://leetcode.com/problems/sliding-puzzle/] Here I am using a String based queue and swap method actually return a new String everytime as Strings in java in immutable.
+
+```
+ if(i!=0 && i!=3){
+    //it has a left
+    
+    String str=swap(temp, i-1,i);
+    System.out.println(str);
+    
+    if(!hs.contains(str)){
+        hs.add(str);
+        q.add(str);
+    }
+    
+    
+}
+```
+
