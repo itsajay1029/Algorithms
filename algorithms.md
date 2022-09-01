@@ -89,4 +89,7 @@ Never use `backtracking with int[] in queue (BFS)` because even if you change th
     
 }
 ```
+Stack of List<String> are useful in many times !
+
+Take a look : [https://leetcode.com/problems/brace-expansion-ii/] 
 
