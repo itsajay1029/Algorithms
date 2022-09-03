@@ -93,3 +93,45 @@ Stack of List<String> are useful in many times !
 
 Take a look : [https://leetcode.com/problems/brace-expansion-ii/] 
 
+-----
+Sometimes try to solve questions with `easy testcases` ! Observe a few things and It gets easier 
+
+[https://leetcode.com/problems/minimum-one-bit-operations-to-make-integers-zero/]
+
+Here we look for n having just one bit set (ith bit) and found that we need to make only (i-1)th bit set and then do one operation and then change that (i-1)th bit back to all zero. So, for f(3rd bit only) = 2* f(2nd bit only)+1;
+
+Now. for n having more than one bit set, for example 1100. while making 1000 to 0000 we made 1100 and then mad 0000. So, we need to take steps to make 1000 to 0000 - (minus) steps to make 1000 to 1100 or shall I say 000 to 100.
+
+Note : Steps taken to make 000 to 100 is equal to 100 to 000.
+
+```
+class Solution {
+    public int minimumOneBitOperations(int n) {
+        
+        int[] f=new int[32];
+        f[0]=1;
+        for(int i=1;i<=31;i++) f[i]=f[i-1]*2+1;
+        
+        int ans=0;
+        boolean flag=true;
+        for(int j=31;j>=0;j--){
+            
+            if(((1<<j)&n)==0) continue;
+            
+            if(flag) ans+=f[j];
+            else ans-=f[j];
+            
+            flag=!flag;            
+            
+        }
+        return ans;
+        
+        
+    }
+}
+
+
+```
+
+
+
