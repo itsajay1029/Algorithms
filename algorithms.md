@@ -134,4 +134,8 @@ class Solution {
 ```
 
 
+Always try to go with memoization as that make questions very easy !
+[https://leetcode.com/problems/jump-game-v/]
+
+
 
