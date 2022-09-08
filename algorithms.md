@@ -137,5 +137,15 @@ class Solution {
 Always try to go with memoization as that make questions very easy !
 [https://leetcode.com/problems/jump-game-v/]
 
+Finding patterns can solve questions really easy ! Here 121 patterns and 123 patterns for next row is dependent on the curr row
+
+next121=curr121*3+curr123*2
+next123=curr121*2+curr123*2
+
+[https://leetcode.com/problems/number-of-ways-to-paint-n-3-grid/submissions/]
+
+
+
+
 
 
