@@ -167,3 +167,64 @@ class Solution {
 
 
 
+3D DP is amazing ! Use recursion first and then start doing it with memoization
+
+[https://leetcode.com/problems/paint-house-iii/]
+
+```
+class Solution {
+  
+        static int[][][] dp;
+    public int minCost(int[] houses, int[][] cost, int m, int n, int target) {
+        dp=new int[101][101][21];
+        int ans=getAns(houses,cost,m,n,target,0,0,0);
+        if(ans==Integer.MAX_VALUE) return -1;
+        return ans;
+        
+        
+    }
+    
+    static int getAns(int[] houses, int[][] costs, int m, int n, int target, int ind,int count,int color){
+        
+        if(ind==m){
+           return (count==target)? 0:Integer.MAX_VALUE;
+        }
+        
+        if(dp[ind][count][color]!=0) return dp[ind][count][color];
+        
+        
+        int cost=Integer.MAX_VALUE;
+        if(houses[ind]!=0){
+            
+            if(houses[ind]==color) 
+                cost=getAns(houses,costs,m,n,target,ind+1,count,houses[ind]);
+            else
+                cost=getAns(houses,costs,m,n,target,ind+1,count+1,houses[ind]);
+            
+            
+        }else{
+
+            for(int i=1;i<=n;i++){
+                int temp;
+                if(i==color){
+                    int after=getAns(houses,costs,m,n,target,ind+1,count,i);
+                   temp=(after != Integer.MAX_VALUE)?costs[ind][i-1]+after : after;
+                }else{
+                    int after=getAns(houses,costs,m,n,target,ind+1,count+1,i);
+                    temp=(after != Integer.MAX_VALUE)?costs[ind][i-1]+after :after;
+                    
+                }
+                cost=Math.min(cost,temp);
+                    
+            }            
+   
+        }
+       
+        return dp[ind][count][color]=cost;
+        
+       
+        
+        
+    }
+}
+```
