@@ -228,3 +228,38 @@ class Solution {
     }
 }
 ```
+----
+
+VVIP : [https://leetcode.com/problems/find-k-pairs-with-smallest-sums/]
+
+Use a prioritry queue ! Initially initialise it will first k elements of nums1 paired with 0th elemnt of nums2. Now, take each element from pq one by one and add to ans. check if there is an element to left on nums2 then add it on pq pairing with the element of num1;
+
+That way you get all k pair sums
+
+```
+class Solution {
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        PriorityQueue<int[]> pq=new PriorityQueue<int[]>((a,b)-> (nums1[a[0]]+nums2[a[1]])-(nums1[b[0]]+nums2[b[1]]) );
+        
+       for(int i=0;i<k && i<nums1.length;i++) pq.add(new int[] {i,0});
+        List<List<Integer>> ans=new ArrayList<>();
+        while(k-->0 && !pq.isEmpty()){
+            int[] ind=pq.poll();
+            ArrayList<Integer> temp=new ArrayList<Integer>();
+            temp.add(nums1[ind[0]]);
+            temp.add(nums2[ind[1]]);
+            ans.add(temp);
+            
+            if(ind[1]+1<nums2.length) pq.add(new int[] {ind[0],ind[1]+1});
+
+        }
+        
+        return ans;
+        
+        
+        
+    }
+}
+```
+
+Similar ques : [https://leetcode.com/problems/find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows/submissions/] But this one is for a matrix
