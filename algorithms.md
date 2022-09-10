@@ -167,7 +167,7 @@ class Solution {
 
 
 
-3D DP is amazing ! Use recursion first and then start doing it with memoization
+3D DP is amazing !` Use recursion first` and then start doing it with memoization
 
 [https://leetcode.com/problems/paint-house-iii/]
 
@@ -232,7 +232,7 @@ class Solution {
 
 VVIP : [https://leetcode.com/problems/find-k-pairs-with-smallest-sums/]
 
-Use a prioritry queue ! Initially initialise it will first k elements of nums1 paired with 0th elemnt of nums2. Now, take each element from pq one by one and add to ans. check if there is an element to left on nums2 then add it on pq pairing with the element of num1;
+Use a prioritry queue ! Initially `initialise it will first k elements of nums1 paired with 0th elemnt of nums2`. Now, take each element from pq one by one and add to ans. check if there is an element to left on nums2 then add it on pq pairing with the element of num1;
 
 That way you get all k pair sums
 
@@ -263,3 +263,74 @@ class Solution {
 ```
 
 Similar ques : [https://leetcode.com/problems/find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows/submissions/] But this one is for a matrix
+
+----
+VVIP : `Intelligent BFS`
+
+Find the shortest path visiting all node ? [https://leetcode.com/problems/shortest-path-visiting-all-nodes/]
+
+Intuition : We will always use `BFS for shortest path` as that guarantees it. Normal BFS will not be used in this question because one node can be traversed multiple times. Also, we just can't avoid using visited array as that will cause infinitre looping. So, we basically need to modify our visited array and add few more data structures in the BFS algo.
+
+We use `bitmasking for looking at the state of each node.` If we arrive at a node with a state similar to before, then we avoid it (for looping avoidance)
+
+```
+class Solution {
+    public int shortestPathLength(int[][] graph) {
+        int n=graph.length;
+        
+        int shortest=Integer.MAX_VALUE;
+        for(int i=0;i<n;i++){
+            shortest=Math.min(shortest,run_bfs(graph,i,n));
+        }
+        return shortest;
+    }
+    static int run_bfs(int[][] graph, int node, int n){
+        
+        int finalState= (1<<n)-1;
+        
+        Queue<int[]> q=new LinkedList<int[]>();
+        q.add(new int[] {node,(1<<node)});
+        
+        boolean[][] vis=new boolean[n][(1<<n)];
+        vis[node][(1<<node)]=true;
+        
+        int[][] dis=new int[n][(1<<n)];
+        
+        int count=0;
+        while(!q.isEmpty()){
+            
+            
+                 int[] x=q.poll();
+                     
+                if(x[1]==finalState) return dis[x[0]][x[1]];
+                     
+                  for(int nbr : graph[x[0]]){
+                      
+                     int newMask=(x[1] | (1<<nbr));
+                      
+                     if(vis[nbr][newMask]) continue;
+                      
+                     vis[nbr][newMask]=true;
+                     q.add(new int[] { nbr, newMask});
+                     dis[nbr][newMask]=1+dis[x[0]][x[1]];
+                      
+                      
+                      
+                      
+                      
+                  }  
+                     
+          
+            
+            
+        }
+        
+        return Integer.MAX_VALUE;
+        
+        
+        
+        
+        
+    }
+}
+```
