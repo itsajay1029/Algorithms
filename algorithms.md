@@ -334,7 +334,7 @@ class Solution {
     }
 }
 ```
-
+----
 You can do `Djikstra Algo` in a modified way using `Priority Queue`
 
 [https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/]
@@ -424,5 +424,20 @@ class Solution {
 }
 
 ```
+Similar Approach : [https://leetcode.com/submissions/detail/797797203/]
 
+----
+How do you `store the matrix state` in any HashSet ?
 
+```
+        int matrix=0;
+        int m=mat[0].length;
+        int n=mat.length;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                matrix |= (mat[i][j]<<(i*m+j));
+            }
+        }
+        
+```
+----
