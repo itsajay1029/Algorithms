@@ -334,3 +334,95 @@ class Solution {
     }
 }
 ```
+
+You can do `Djikstra Algo` in a modified way using `Priority Queue`
+
+[https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/]
+
+Since I need the minimum cost, I have dis filled with Max except for (0,0) which we are getting as min tuple from priority queue (min and unprocessed)
+
+now, we mark it as processed and look for all neighbouring cells and find their cost. if their cost is less then what we have on dis array, we update it and put them on the queue
+
+```
+class Solution {
+    static int[] dir =new int[] {0,1,0,-1,0};
+    
+    static class tuple implements Comparable<tuple>{
+        int x, y,z;
+        public tuple(int x, int y, int z){
+            this.x=x;
+            this.y=y;
+            this.z=z;
+        }
+        
+        public int compareTo(tuple t){
+            return this.x-t.x;
+        }
+    }
+    public int minCost(int[][] grid) {
+        
+        int n=grid.length;
+        int m=grid[0].length;
+        
+        PriorityQueue<tuple> pq=new PriorityQueue<tuple>();
+        pq.add(new tuple(0,0,0));
+        
+        int[][] dis=new int[n][m];
+        for(int i=0;i<n;i++)Arrays.fill(dis[i],Integer.MAX_VALUE);
+        dis[0][0]=0;
+        
+         boolean[][] vis=new boolean[n][m];
+        
+        
+        while(!pq.isEmpty()){
+            
+            tuple t=pq.poll();
+            int r=t.y;
+            int c=t.z;
+            int cost=t.x;
+            
+            vis[r][c]=true;
+            
+            
+            
+            for(int i=0;i<=3;i++){
+                int nr=r+dir[i];
+                int nc=c+dir[i+1];
+                if(nr>=0 && nr<n && nc>=0 && nc<m && !vis[nr][nc]){
+                    int ncost=cost;
+                    if(!isPointing(nr,nc,r,c,grid[r][c])) ncost++;
+                    
+                    if(dis[nr][nc]>ncost){
+                        dis[nr][nc]=ncost;
+                        pq.add(new tuple(ncost,nr,nc));
+                    }
+                    
+                }
+            }
+            
+           
+            
+            
+        }
+        
+         return dis[n-1][m-1];
+        
+        
+      
+    }
+    static boolean isPointing(int nr, int nc, int r, int c, int x){
+        if(x==1){
+            return (nr==(r+0) && nc==(c+1));
+        }else if(x==2){
+            return (nr==(r+0) && nc==(c-1));
+        }else if(x==3){
+            return (nr==(r+1) && nc==(c));
+        }else{
+            return (nr==(r-1) && nc==(c));
+        }
+    }
+}
+
+```
+
+
