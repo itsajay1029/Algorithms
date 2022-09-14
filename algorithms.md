@@ -441,3 +441,105 @@ How do you `store the matrix state` in any HashSet ?
         
 ```
 ----
+
+Solving `permutations related problems` is like valid ways/total no of ways where we take both as static variables.
+
+Now, we traverse and backtrack and found all possible ways of arrangement! and keep interementing the valid ways (if valid) and total no of ways by number of permutations of the arrangement.
+
+Formula : n!/(a!* b!* c!) id a and b and c are identical
+
+[https://leetcode.com/problems/probability-of-a-two-boxes-having-the-same-number-of-distinct-balls/submissions/]
+
+```
+class Solution {
+    static double all=0.0;
+    static double distinct=0.0;
+    public double getProbability(int[] balls) {
+        all=0.0;
+        distinct=0.0;
+        int n=balls.length;
+        int[] first=new int[n];
+        int[] second=new int[n];
+        
+        allDistributions(first,second,balls,0);
+        
+        return distinct/all;
+        
+        
+    }
+    static void allDistributions(int[] first, int[] second,int[] balls, int i){
+        HashMap<Integer,Double> map=new HashMap<Integer,Double>();
+        if(i==balls.length){
+            int total1=0;
+            int total2=0;
+            
+            for(int j=0;j<first.length;j++) total1+=first[j];
+             for(int j=0;j<second.length;j++) total2+=second[j];
+            
+            if(total1==total2){
+                
+                double p=1.0;
+                for(int j=0;j<first.length;j++){
+                    p*=fact(first[j],map);
+                }
+                
+               double ways1=fact(total1,map)/p;
+                
+                p=1.0;
+                for(int j=0;j<second.length;j++){
+                    p*=fact(second[j],map);
+                }
+                
+                double ways2=fact(total2,map)/p;
+                
+                all+=ways1*ways2;
+                
+                int dis1=0,dis2=0;
+                
+                for(int j=0;j<first.length;j++){
+                    if(first[j]>0) dis1++;
+                }
+                
+                for(int j=0;j<second.length;j++){
+                    if(second[j]>0) dis2++;
+                }
+                
+                if(dis1==dis2) distinct+=(ways1*ways2);
+                
+                
+                
+                
+                
+            }
+            
+            
+            
+          return;  
+        }
+        
+        
+        
+        
+        
+        
+        for(int j=0;j<=balls[i];j++){
+            first[i]=j;
+            second[i]=balls[i]-j;
+            allDistributions(first,second,balls,i+1);
+        }
+        
+        
+    }
+    static double fact(int x, HashMap<Integer,Double> map){
+        double ans=1.0;
+        if(map.containsKey(x)) return map.get(x);
+        if(x>0)
+            ans= ans*x*fact(x-1,map);
+        map.put(x,ans);
+        return ans;
+    }
+}
+
+```
+
+----
