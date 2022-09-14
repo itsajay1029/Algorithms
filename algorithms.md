@@ -442,9 +442,9 @@ How do you `store the matrix state` in any HashSet ?
 ```
 ----
 
-Solving `permutations related problems` is like valid ways/total no of ways where we take both as static variables.
+Solving `probability related problems` is like valid ways/total no of ways where we take both as static variables.
 
-Now, we traverse and backtrack and found all possible ways of arrangement! and keep interementing the valid ways (if valid) and total no of ways by number of permutations of the arrangement.
+Now, we traverse and backtrack and found all possible ways of arrangement ! and keep incrementing the valid ways (if valid) and total no of ways by number of permutations of the arrangement.
 
 Formula : n!/(a!* b!* c!) id a and b and c are identical
 
