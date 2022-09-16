@@ -543,3 +543,55 @@ class Solution {
 ```
 
 ----
+
+[https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/submissions/]
+`Classic DP`
+
+Sometimes, we see a problem that this is a backtracking or recursion problem but to memoise it we need n*m matrix where n=1000 and m=100000 (in this case) which is not possible to track then What do we do ?
+
+Use Classic DP !
+
+```
+class Solution {
+    public int maximumScore(int[] nums, int[] mul){
+        
+        int n=nums.length;
+        int m=mul.length;
+        
+        int[][] dp=new int[m][m];
+        
+        getMaxScore(nums,mul,dp,n,m,0,0);
+        
+        return dp[0][0];
+        
+    }
+    
+    static int getMaxScore(int[] nums, int[] mul, int[][] dp, int n, int m, int m_index, int n_index){
+        if(m_index>=m) return 0;
+        
+        int low=n_index;
+        int high=n-1-(m_index-n_index);
+        
+        if(dp[m_index][n_index]!=0) return dp[m_index][n_index];
+        
+        int score=Math.max(mul[m_index]*nums[low]+getMaxScore(nums,mul,dp,n,m,m_index+1,n_index+1),mul[m_index]*nums[high]+getMaxScore(nums,mul,dp,n,m,m_index+1,n_index));
+        
+        return dp[m_index][n_index]=score;
+        
+    }
+    
+}
+```
+At every point, you have two choices : left choice (0th index) and right choice(n-1th index) on nums array.
+
+Here, I am using a pointer on m array as m_th index (thinkable) and n_th index which is the left choice on the nums array that you will have at any point.
+
+Here, high is the right choice which is (nums.length - (total removed- removed on left))
+
+At any point, right choice can easily be found as m_index will give total elements removed and n_index will give elements removed on the left.
+
+Key thing to note is that at any worst case where we remove elements on from the left, the n_index (left choice) will go till m only.
+
+So, here we can easily memoise it ! Credits goes to [https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/discuss/1075496/C%2B%2BPython-Classic-DP]
+
+----
