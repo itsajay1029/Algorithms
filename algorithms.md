@@ -595,3 +595,15 @@ Key thing to note is that at any worst case where we remove elements on from the
 So, here we can easily memoise it ! Credits goes to [https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/discuss/1075496/C%2B%2BPython-Classic-DP]
 
 ----
+What's the `fastest way to reverse` any string ?
+
+Using String buffer !
+
+```
+static String reverse(String str, int i, int j){
+        str=str.substring(i,j+1);
+       StringBuilder sb= new StringBuilder(str);
+        return sb.reverse().toString();
+    }
+```
+----
