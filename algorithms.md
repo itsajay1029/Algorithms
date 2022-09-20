@@ -607,4 +607,36 @@ static String reverse(String str, int i, int j){
     }
 ```
 ----
+**Alica and Bob game problem (Boolean Dynamic Programming)**
+
+*dp[i]= Whether Alice will win if n=i ?*
+
+Maintaining a dp where after alice's first turn, dp[new state of stone] is false, that means if Alice was given that new state at the start of the game, he would lose. 
+
+But here, after alice's turn, Bob will be given that state of stones, so he will lose and henceforth, Alice will win. 
+
+**JAVA**
+
+```
+class Solution {
+    public boolean winnerSquareGame(int n) {
+        
+       boolean[] dp=new boolean[n+1];
+        
+        for(int i=1;i<=n;i++){
+            for(int k=1;k*k<=i;k++){
+                if(!dp[i-(k*k)]){
+                    dp[i]=true;
+                    
+                }
+            }
+        }
+        return dp[n];
+        
+    }
+}
+```
+[https://leetcode.com/problems/stone-game-iv/]
+
 ----
+
