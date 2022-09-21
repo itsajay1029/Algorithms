@@ -640,3 +640,56 @@ class Solution {
 
 ----
 
+[https://leetcode.com/problems/special-binary-string/]
+
+Here I am looking for two consecutive Special Binary String(SBS) and if 2nd one is lexographically greater than the first one we will swap them and restart with the new String by calling a recursive function.
+
+Now, for looking 2 consecutive SBS, what we will do is use two for loop. 
+
+Take four pointers s1= starting point of 1st SBS, e1=ending point of 1st SBS, s2=starting point of 2nd SBS, e2=ending point of 2nd SBS
+
+**JAVA**
+```
+class Solution {
+    public String makeLargestSpecial(String s) {
+        
+        int n=s.length();
+        for(int i=0;i<n;i++){
+            //starting point
+            if(s.charAt(i)=='0') continue;
+            // SBS cannot start with 0
+            int x=0; // count
+            int s1=i,e1=-1,s2=-1,e2=-1;
+            for(int j=i;j<n;j++){
+                if(s.charAt(j)=='1')x++;
+                else x--;
+                if(x==0){
+                    if(e1==-1){
+                        e1=j;
+                        if(j+1>=n || s.charAt(j+1)=='0') break;
+                        s2=j+1;
+                    }else if(e2==-1){
+                        e2=j;
+                        break;
+                    }
+                }
+            }
+            
+            if(s1!=-1 && e1!=-1 && s2!=-1 && e2!=-1){
+               
+                String temp=s.substring(0,s1)+s.substring(s2,e2+1)+s.substring(s1,e1+1)+s.substring(e2+1);
+                if(temp.compareTo(s)>0) {
+                    return makeLargestSpecial(temp);
+                }
+            }
+            
+            
+            
+        }
+        return s;
+        
+    }
+}
+
+```
+
