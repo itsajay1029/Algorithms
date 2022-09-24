@@ -692,4 +692,53 @@ class Solution {
 }
 
 ```
+----
+[https://leetcode.com/problems/longest-chunked-palindrome-decomposition/]
+
+Very sure, Two Pointers will be used in this problem.
+
+But `How can we optimize it so that it covers all edge cases ?` 
+
+In most solutions, we are running ith pointer till half of the array and incrementing the result twice everytime.
+
+But now, ith pointer will loop from start to end and res will be increased by one only.
+
+Because every state of division will be witnessed twice as we are looping till the end.
+
+**JAVA**
+
+```
+class Solution {
+    public int longestDecomposition(String text) {
+        int n=text.length();
+        
+        String l="";
+        String r="";
+        
+        int ans=0;
+        for(int i=0;i<n;i++){
+            l+=text.charAt(i);
+            r=text.charAt(n-i-1)+r;
+            
+            if(l.equals(r)){
+                l="";
+                r="";
+                ans++;
+            }
+           
+            
+            
+            
+        }
+        
+        return ans;
+        
+        
+        
+    }
+   
+}
+```
+
+
 
