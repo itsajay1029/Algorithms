@@ -739,6 +739,73 @@ class Solution {
    
 }
 ```
+----
+[https://leetcode.com/problems/find-xor-sum-of-all-pairs-bitwise-and/description/]
 
+# Intuition
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+We can't make pair due to the constraints....So, why not run on bits ?
+
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+Assume my xor is 0 i.e, all bits are unset !
+
+Now we travel on each bit to check whether that bit will be set in my final xor or not.
+
+set1 : How many elements on the first array has ith bit set ?
+           
+
+set2 : How many elements on the second array has ith bit set ?
+
+Remember on the final array which contains BITWISE AND of all pairs, if any ith bit is set then that means the pair of numbers which were made to do bitwise AND had both their ith bit set. 
+
+So, How many such pairs would exist ?
+
+It's simple : **set1*set2**
+
+Now if number of such elements in final array is *even* then they will boils down to 0 as BITWISE XOR for similar elements is always 0.
+
+But if it is odd, then we can have that bit set there !
+
+# Complexity
+- Time complexity: $$O(n)$$
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity: $$O(1)$$
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```
+class Solution {
+    public int getXORSum(int[] arr1, int[] arr2) {
+
+     
+        int xor=0;
+        for(int i=0;i<31;i++){
+            int set1=0;
+           
+            for(int j=0;j<arr1.length;j++){
+                if((arr1[j]&(1<<i))!=0) set1++;
+            }
+
+            int set2=0;
+           
+            for(int j=0;j<arr2.length;j++){
+                if((arr2[j]&(1<<i))!=0) set2++;
+            }
+
+            if(((set1*set2)&1)!=0) xor=(xor | (1<<i));
+
+        }
+
+       
+       
+        return xor;
+    }
+}
+```
+----
 
 
