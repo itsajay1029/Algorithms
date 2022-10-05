@@ -842,3 +842,94 @@ public static void primeFactors(int n)
 Time Complexity : O(n^1/2)
 ----
 
+[https://leetcode.com/problems/build-a-matrix-with-conditions/description/]
+# Intuition
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+Since each rowConditions and colConditions is of type (a,b) : It looks like a directed edge i.e, a->b
+
+And rowConditions gives how elements should be arranged rowwise and colCondition can be arranged column wise. So, we can try Topological sorting here.
+
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+Get the topological Sort arrangement of all nodes (1 to k) in rowwise and columnwise separately using Kahn's Algo.
+
+Now, we check if rowwise and columnwise arrangement has all nodes. If not, return empty array i.e, the graph wasn't Directed Acyclic one.
+
+ind[i] will store the index of column where any particular node will lie
+
+Now fill up the res array using ind[] and row[] and return res.
+
+
+
+# Complexity
+- Time complexity: $$O(k)$$
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity: $$O(k)$$
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```
+class Solution {
+    public int[][] buildMatrix(int k, int[][] rowConditions, int[][] colConditions) {
+
+        List<Integer> row=kahn_algo(rowConditions,k);
+        if(row.size()!=k) return new int[][] {};
+
+         List<Integer> col=kahn_algo(colConditions,k);
+        if(col.size()!=k) return new int[][] {};
+
+        int[] ind=new int[k+1];
+        for(int i=0;i<col.size();i++){
+            ind[col.get(i)]=i;
+        }
+
+        int[][] res=new int[k][k];
+
+        for(int i=0;i<row.size();i++){
+            int val=row.get(i);
+            int c=ind[val];
+            res[i][c]=val;
+        }
+        return res;
+
+        
+    }
+    static List<Integer> kahn_algo(int[][] cond, int k){
+
+        List<Integer> ans=new ArrayList<Integer>();
+
+        int[] indegree=new int[k+1];
+
+        List<List<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<=k;i++) adj.add(new ArrayList<Integer>());
+
+        for(int[] c: cond){
+            indegree[c[1]]++;
+            adj.get(c[0]).add(c[1]);
+        }
+
+        Queue<Integer> q=new LinkedList<Integer>();
+        for(int i=1;i<=k;i++) if(indegree[i]==0) q.add(i);
+
+        while(!q.isEmpty()){
+            int x=q.poll();
+            ans.add(x);
+
+            for(int nbr:adj.get(x)){
+                indegree[nbr]--;
+                if(indegree[nbr]==0) q.add(nbr);
+            }
+
+        }
+
+        return ans;
+
+
+
+
+    }
+}
+```
