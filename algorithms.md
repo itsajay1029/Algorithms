@@ -933,3 +933,35 @@ class Solution {
     }
 }
 ```
+
+----
+Number of characters to add in the front to make a string a palindrome.
+
+[https://practice.geeksforgeeks.org/problems/minimum-characters-to-be-added-at-front-to-make-string-palindrome/1]
+
+Only dry run can help you understand the code ! O(N) Complexity
+
+```
+public static int minChar(String str) {
+       //Write your code here
+       int n=str.length();
+       int i=0;
+       int j=n-1;
+       int count=0;
+       int not_matched=n-1;
+       
+       while(i<j){
+           if(str.charAt(i)==str.charAt(j)){
+               i++;
+               j--;
+           }else{
+               count++;
+               not_matched--;
+               j=not_matched;
+               i=0;
+           }
+       }
+       return count;
+       
+    }
+```
