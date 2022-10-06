@@ -53,3 +53,54 @@ class Solution {
 }
 ```
 ----
+
+Thanks to Lee for solving this 5 years ago !
+
+[https://leetcode.com/problems/orderly-queue/solutions/165878/c-java-python-sort-string-or-rotate-string/]
+
+# Code
+```
+class Solution {
+    public String orderlyQueue(String s, int k) {
+        
+       return solve(s,k,s.length());
+    }
+
+    static String solve(String s, int k, int n){
+
+        if(k>1){
+            char[] temp=s.toCharArray();
+            Arrays.sort(temp);
+            return new String(temp);
+        }
+
+        
+        String res=s;
+        for(int i=1;i<n;i++){
+            s=s.substring(1)+s.charAt(0);
+            if(s.compareTo(res)<0) res=s;
+        }
+
+        return res;
+
+    }
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+```
