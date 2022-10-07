@@ -104,3 +104,37 @@ class Solution {
 
 }
 ```
+
+----
+[https://leetcode.com/problems/check-if-it-is-a-good-array/description/]
+
+Just an observartion :
+
+Start finding gcd of all the elements as you traverse the array ****(gcd_till_now : gcd from 0th index to ith index)****, if at any point **gcd_till_now becomes 1 return true**.
+
+**Otherwise return false**.
+
+**JAVA**
+```
+class Solution {
+    public boolean isGoodArray(int[] nums) {
+
+        int n=nums.length;
+        int gcd_till_now=0;
+        for(int i=0;i<n;i++){
+            gcd_till_now=gcd(gcd_till_now,nums[i]);
+            if(gcd_till_now==1) return true;
+        }
+        
+        return false;
+    }
+
+    static int gcd(int a, int b){
+
+        //Euclid Algo to find GCD of two numbers
+        if(b==0) return a;
+
+        return gcd(b,a%b);
+    }
+}
+```
